@@ -1,0 +1,13 @@
+{
+  "name": "fablyr-ecommerce",
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev:frontend": "bun --cwd frontend run dev",
+    "dev:backend": "bun --cwd backend run dev",
+    "dev": "bun run dev:frontend & bun run dev:backend"
+  }
+}
