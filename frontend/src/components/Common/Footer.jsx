@@ -4,7 +4,14 @@ import { FaFacebookF, FaInstagram, FaXTwitter, FaPinterestP } from 'react-icons/
 
 const Footer = () => {
    return (
-      <div>Footer</div>
+      <footer>
+         <div>
+            <div>
+               <h3>Newsletter</h3>
+               <p>Be the first to know about our latest products and exclusive offers!</p>
+            </div>
+         </div>
+      </footer>
    )
 }
 
