@@ -6,7 +6,7 @@ import { FiPhoneCall } from "react-icons/fi";
 
 const Footer = () => {
    return (
-      <footer className='border-t-2 border-gray-300 py-12'>
+      <footer className='border-t-2 border-gray-300 pt-12 pb-6'>
          {/* 📌 Changed to a 5-column grid on large screens to tighten the gaps */}
          <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 px-4 lg:px-0'>
 
@@ -84,6 +84,9 @@ const Footer = () => {
                   </p>
                </div>
             </div>
+         </div>
+         <div className='container mx-auto mt-12 px-4 lg:px-0 border-t border-gray-200 pt-6'>
+            <p className='text-center text-sm text-gray-500 tracking-tighter'>&copy; 2026 Fablyr. All rights reserved.</p>
          </div>
       </footer>
    );
