@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
 
 const navItems = [
-   { id: 1, label: 'Men', path: '/men', category: 'men' },
+   { id: 1, label: 'Men', path: '/collections/all', category: 'men' },
    { id: 2, label: 'Women', path: '/women', category: 'women' },
    { id: 3, label: 'Top Wear', path: '/top-wear', category: 'top-wear' },
    { id: 4, label: 'Bottom Wear', path: '/bottom-wear', category: 'bottom-wear' },
@@ -111,81 +111,3 @@ const Navbar = () => {
 
 export default Navbar
 
-// import { Link } from 'react-router'
-// import { useState } from 'react'
-// import { FiMenu, FiX } from 'react-icons/fi'
-
-// // Navigation data array - can be easily extended or modified
-// const navItems = [
-//    { id: 1, label: 'Men', path: '/men', category: 'men' },
-//    { id: 2, label: 'Women', path: '/women', category: 'women' },
-//    { id: 3, label: 'Top Wear', path: '/top-wear', category: 'top-wear' },
-//    { id: 4, label: 'Bottom Wear', path: '/bottom-wear', category: 'bottom-wear' },
-//    { id: 5, label: 'Accessories', path: '/accessories', category: 'accessories' },
-//    { id: 6, label: 'Sale', path: '/sale', category: 'sale', isFeatured: true }
-// ]
-
-// const Navbar = () => {
-//    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
-//    const toggleMobileMenu = () => {
-//       setIsMobileMenuOpen(!isMobileMenuOpen)
-//    }
-
-//    return (
-//       <>
-//          <nav className='container mx-auto flex items-center justify-between py-4 px-6'>
-//             {/* left logo */}
-//             <div>
-//                <Link to="/" className="text-2xl font-bold text-gray-900">
-//                   Fablyr
-//                </Link>
-//             </div>
-
-//             {/* Desktop navigation links */}
-//             <div className='hidden md:flex space-x-8'>
-//                {navItems.map((item) => (
-//                   <Link
-//                      key={item.id}
-//                      to={item.path}
-//                      className={`text-gray-700 hover:text-black text-sm font-medium uppercase transition-colors duration-200 ${item.isFeatured ? 'text-red-600 font-bold' : ''}`}
-//                   >
-//                      {item.label}
-//                   </Link>
-//                ))}
-//             </div>
-
-//             {/* Mobile menu button */}
-//             <button
-//                className='md:hidden text-gray-700 hover:text-black focus:outline-none'
-//                onClick={toggleMobileMenu}
-//                aria-label="Toggle mobile menu"
-//             >
-//                {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-//             </button>
-
-//             {/* Mobile menu */}
-//             {isMobileMenuOpen && (
-//                <div className='absolute top-full left-0 right-0 bg-white shadow-lg md:hidden z-50'>
-//                   <div className='container mx-auto px-6 py-4'>
-//                      <div className='flex flex-col space-y-4'>
-//                         {navItems.map((item) => (
-//                            <Link
-//                               key={item.id}
-//                               to={item.path}
-//                               className={`text-gray-700 hover:text-black py-2 text-sm font-medium uppercase ${item.isFeatured ? 'text-red-600 font-bold' : ''}`}
-//                               onClick={() => setIsMobileMenuOpen(false)}
-//                            >
-//                               {item.label}
-//                            </Link>
-//                         ))}
-//                      </div>
-//                   </div>
-//                </div>
-//             )}
-//          </nav>
-//       </>
-//    )
-// }
-
-// export default Navbar
