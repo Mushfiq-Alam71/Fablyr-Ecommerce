@@ -57,7 +57,7 @@ const Navbar = () => {
                </Link>
                <button onClick={toggleCartDrawer} className='relative hover:text-black'>
                   <HiOutlineShoppingBag className='h-6 w-6 text-gray-700' />
-                  <span className='absolute -top-1 bg-fablyr-red text-white text-xs rounded-full px-1.5 py-0.3'>4</span>
+                  <span className='absolute -top-1 bg-fablyr-red opacity-80 text-white text-xs rounded-full px-1.5 py-0.3'>4</span>
                </button>
 
                {/* Search */}
