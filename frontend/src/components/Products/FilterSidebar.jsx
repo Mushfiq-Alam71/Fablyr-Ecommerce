@@ -2,32 +2,21 @@ import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router"
 
 const FilterSidebar = () => {
+
    const [searchParams, setSearchParams] = useSearchParams();
    const navigate = useNavigate();
 
    const [filters, setFilters] = useState({
-      category: "",
-      gender: "",
-      color: "",
-      size: "",
-      material: "",
-      brand: "",
-      minPrice: 0,
-      maxPrice: 100
+      category: "", gender: "", color: "", size: "", material: "", brand: "", minPrice: 0, maxPrice: 100
    })
 
    const [priceRange, setPriceRange] = useState([0, 100]);
 
    const categories = ["Shirts", "Pants", "Shoes", "Accessories"];
-
    const genders = ["Men", "Women"];
-
    const colors = ["Red", "Blue", "Black", "Green", "Yellow", "Grey", "White", "Pink", "Brown", "Navy"];
-
    const sizes = ["XS", "S", "M", "L", "XL"];
-
    const materials = ["Cotton", "Denim", "Leather", "Wool"];
-
    const brands = ["Lacoste", "Nike", "Adidas", "Zara"];
 
    useEffect(() => {
