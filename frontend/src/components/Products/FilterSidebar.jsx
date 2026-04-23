@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react"
-import { useNavigate, useSearchParams } from "react-router"
+import { useSearchParams } from "react-router"
 
 const FilterSidebar = () => {
-
+   // 📌 1. Only grab useSearchParams. Remove useState, useEffect, and useNavigate entirely.
    const [searchParams, setSearchParams] = useSearchParams();
-   const navigate = useNavigate();
-
-   const [filters, setFilters] = useState({
-      category: "", gender: "", color: "", size: "", material: "", brand: "", minPrice: 0, maxPrice: 100
-   })
-
-   const [priceRange, setPriceRange] = useState([0, 100]);
 
    const categories = ["Shirts", "Pants", "Shoes", "Accessories"];
    const genders = ["Men", "Women"];
@@ -19,25 +11,27 @@ const FilterSidebar = () => {
    const materials = ["Cotton", "Denim", "Leather", "Wool"];
    const brands = ["Lacoste", "Nike", "Adidas", "Zara"];
 
-   useEffect(() => {
-      const params = Object.fromEntries([...searchParams]);
+   // 📌 2. Derive the filters DIRECTLY from the URL on every render.
+   // No useEffect needed. When the URL changes, React re-renders and recalculates this automatically.
+   const currentParams = Object.fromEntries([...searchParams]);
+   const filters = {
+      category: currentParams.category || "",
+      gender: currentParams.gender || "",
+      color: currentParams.color || "",
+      size: currentParams.size ? currentParams.size.split(",") : [],
+      material: currentParams.material ? currentParams.material.split(",") : [],
+      brand: currentParams.brand ? currentParams.brand.split(",") : [],
+      minPrice: parseInt(currentParams.minPrice) || 0,
+      maxPrice: parseInt(currentParams.maxPrice) || 100
+   };
 
-      setFilters({
-         category: params.category || "",
-         gender: params.gender || "",
-         color: params.color || "",
-         size: params.size ? params.size.split(",") : [],
-         material: params.material ? params.material.split(",") : [],
-         brand: params.brand ? params.brand.split(",") : [],
-         minPrice: parseInt(params.minPrice) || 0,
-         maxPrice: parseInt(params.maxPrice) || 100
-      });
-      setPriceRange([0, params.maxPrice || 100])
-   }, [searchParams])
+   // Derive price range directly from the filters we just calculated
+   const priceRange = [0, filters.maxPrice];
 
    const handleFilterChange = (e) => {
       const { name, value, type, checked } = e.target;
 
+      // Copy the derived filters instead of local state
       let newFilters = { ...filters };
 
       if (type === 'checkbox') {
@@ -49,7 +43,16 @@ const FilterSidebar = () => {
       } else {
          newFilters[name] = value;
       }
-      setFilters(newFilters);
+
+      // 📌 3. Just update the URL. Don't set local state. 
+      updateURLParams(newFilters);
+   }
+
+   const handlePriceChange = (e) => {
+      const newPrice = e.target.value;
+      const newFilters = { ...filters, minPrice: 0, maxPrice: newPrice };
+
+      // Just update the URL.
       updateURLParams(newFilters);
    }
 
@@ -58,24 +61,17 @@ const FilterSidebar = () => {
       Object.keys(newFilters).forEach((key) => {
          if (Array.isArray(newFilters[key]) && newFilters[key].length > 0) {
             params.append(key, newFilters[key].join(","));
-         } else if (newFilters[key]) {
+         } else if (newFilters[key] && !Array.isArray(newFilters[key])) {
             params.append(key, newFilters[key]);
          }
-      })
-      setSearchParams(params);
-      navigate(`?${params.toString()}`);
-   }
+      });
 
-   const handlePriceChange = (e) => {
-      const newPrice = e.target.value;
-      setPriceRange([0, newPrice]);
-      const newFilters = { ...filters, minPrice: 0, maxPrice: newPrice };
-      setFilters(newFilters);
-      updateURLParams(newFilters);
+      // 📌 4. This automatically updates the URL in the browser AND triggers a re-render.
+      // You do not need to call navigate() here.
+      setSearchParams(params);
    }
 
    return (
-
       <div className="p-4 bg-red-50 rounded-lg ml-4 my-4">
          <h3 className="text-xl font-medium mb-4 text-gray-800">Filters</h3>
 
@@ -127,10 +123,9 @@ const FilterSidebar = () => {
                         type="button"
                         name="color"
                         value={color}
-                        checked={filters.color === color}
-                        onClick={handleFilterChange}
-                        className={`h-8 w-8 rounded-full border border-gray-300 transition-transform duration-300 cursor-pointer group-hover:scale-110 ${filters.color === color ? 'ring-2 ring-black ring-offset-1' : ''
-                           }`}
+                        // Note: Because it's a button, we don't have checked={}, we use className logic
+                        onClick={() => handleFilterChange({ target: { name: "color", value: color, type: "button" } })}
+                        className={`h-8 w-8 rounded-full border border-gray-300 transition-transform duration-300 cursor-pointer group-hover:scale-110 ${filters.color === color ? 'ring-2 ring-black ring-offset-1' : ''}`}
                         style={{ backgroundColor: color.toLowerCase() }}
                      ></button>
                   </div>
